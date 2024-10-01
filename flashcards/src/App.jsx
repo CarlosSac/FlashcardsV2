@@ -1,21 +1,14 @@
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import Flashcard from "./components/Flashcard";
 import "./App.css";
 import Cards from "./components/Cards";
 
 function App() {
-    const [count, setCount] = useState(0);
-
-    const sampleFlashcard = {
-        question: "What is React?",
-        answer: "A library for building user interfaces",
-    };
-
     return (
         <div className='App'>
-            <h1>Flashcards!</h1>
+            <h1>Cybersecurity Governance Flashcards</h1>
+            <h2>Test your knowledge of security concepts</h2>
+            <h4>Click on the card to flip it and reveal the answer</h4>
+            <h4>Number of Cards: 10</h4>
             <Cards />
         </div>
     );
