@@ -1,17 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
+import './Flashcard.css';
 
 function Flashcard({ flashcard }) {
+    const [isFlipped, setIsFlipped] = useState(false);
+
+    const handleFlip = () => {
+        setIsFlipped(!isFlipped);
+    };
+
     return (
-        <div className='card'>
+        <div className={`card ${isFlipped ? 'flipped' : ''}`} onClick={handleFlip}>
             <div className='front'>
                 <h3>{flashcard.question}</h3>
-                <ul>
-                    {flashcard.options.map((option, index) => (
-                        <li key={index}>{option}</li>
-                    ))}
-                </ul>
+            </div>
+            <div className='back'>
+                <h3>{flashcard.answer}</h3>
             </div>
         </div>
     );
 }
+
 export default Flashcard;
