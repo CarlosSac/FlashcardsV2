@@ -1,4 +1,4 @@
-# Web Development Project 3 - * Flashcards Part 2: Cybersecurity Governance*
+# Web Development Project 3 - *Flashcards Part 2: Cybersecurity Governance*
 
 Submitted by: **Carlos Sac**
 
