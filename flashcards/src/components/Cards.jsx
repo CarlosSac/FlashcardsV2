@@ -4,66 +4,102 @@ import "./Flashcard.css";
 
 const flashcards = [
     {
-        question: "What is the Information Security?",
-        answer: "Information security is the confidentiality, integrity, and availability of information",
+        question:
+            "What is the process of converting data into a code to prevent unauthorized access?",
+        answer: "Encryption",
     },
     {
-        question: "What are the security controls that ensure Integrity?",
-        answer: "Hashing, Digital Signatures, and Certificates",
+        question:
+            "What is the practice of hiding messages within other non-secret text or data?",
+        answer: "Steganography",
     },
     {
-        question: "What are the security controls that ensure Confidentiality?",
-        answer: "Encryption, Access Controls, and Steganography",
+        question:
+            "What is the term for verifying the identity of a user or device?",
+        answer: "Authentication",
     },
     {
-        question: "What are the security controls that ensure Availability?",
-        answer: "Redundancy, Backups, and Disaster Recovery",
+        question:
+            "What is the term for ensuring data is accurate and unaltered?",
+        answer: "Integrity",
     },
     {
-        question: "What are the security controls that ensure Authentication?",
-        answer: "Passwords, Biometrics, and Multi-factor Authentication",
+        question:
+            "What is the term for ensuring data is accessible when needed?",
+        answer: "Availability",
     },
     {
-        question: "What are the security controls that ensure Non-repudiation?",
-        answer: "Digital Signatures, Certificates, and Logging",
+        question:
+            "What is the term for ensuring data is only accessible to those authorized to view it?",
+        answer: "Confidentiality",
     },
     {
-        question: "What are the security controls that ensure Authorization?",
-        answer: "Access Controls, Permissions, and Role-based Access Control",
+        question:
+            "What is the term for the ability to trace actions to an individual or entity?",
+        answer: "Accountability",
     },
     {
-        question: "What are the security controls that ensure Accountability?",
-        answer: "Logging, Auditing, and Monitoring",
+        question:
+            "What is the term for the process of confirming a user's permissions?",
+        answer: "Authorization",
     },
     {
-        question: "What are the security controls that ensure Privacy?",
-        answer: "Data Minimization, Data Masking, and Data Encryption",
+        question:
+            "What is the term for the practice of reducing the amount of data collected and stored?",
+        answer: "Minimization",
     },
     {
-        question: "What is the CIA Triad?",
-        answer: "Confidentiality, Integrity, and Availability",
+        question:
+            "What is the term for the use of multiple methods to verify identity?",
+        answer: "MFA",
     },
 ];
 
 function Cards() {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isFlipped, setIsFlipped] = useState(false);
+    const [showAnswer, setShowAnswer] = useState(true);
+    const [userAnswer, setUserAnswer] = useState("");
+    const [feedback, setFeedback] = useState("");
 
     const handleNext = () => {
-        setCurrentIndex((prevIndex) => (prevIndex + 1) % flashcards.length);
         setIsFlipped(false);
+        setShowAnswer(false);
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % flashcards.length);
+        setTimeout(() => setShowAnswer(true), 500);
+        setUserAnswer("");
+        setFeedback("");
     };
 
     const handlePrevious = () => {
+        setIsFlipped(false);
+        setShowAnswer(false);
         setCurrentIndex(
             (prevIndex) =>
                 (prevIndex - 1 + flashcards.length) % flashcards.length
         );
-        setIsFlipped(false);
+        setTimeout(() => setShowAnswer(true), 500);
+        setUserAnswer("");
+        setFeedback("");
     };
 
     const handleFlip = () => {
         setIsFlipped(!isFlipped);
+    };
+
+    const handleInputChange = (e) => {
+        setUserAnswer(e.target.value);
+    };
+
+    const handleSubmit = () => {
+        if (
+            userAnswer.trim().toLowerCase() ===
+            flashcards[currentIndex].answer.toLowerCase()
+        ) {
+            setFeedback("Correct!");
+        } else {
+            setFeedback("Incorrect. Try again!");
+        }
     };
 
     return (
@@ -73,12 +109,31 @@ function Cards() {
                     flashcard={flashcards[currentIndex]}
                     isFlipped={isFlipped}
                     onFlip={handleFlip}
+                    showAnswer={showAnswer}
                 />
+            </div>
+            {!isFlipped && (
+                <div className='input-container'>
+                    <label htmlFor='userAnswer'>Guess the answer here:</label>
+                    <input
+                        id='userAnswer'
+                        type='text'
+                        value={userAnswer}
+                        onChange={handleInputChange}
+                    />
+                    <button onClick={handleSubmit}>Submit</button>
+                </div>
+            )}
+            <div
+                className={`feedback ${
+                    feedback === "Correct!" ? "correct" : "incorrect"
+                }`}
+            >
+                {feedback}
             </div>
 
             <div className='button-container'>
                 <button onClick={handlePrevious}>Previous</button>
-
                 <button onClick={handleNext}>Next</button>
             </div>
         </div>
