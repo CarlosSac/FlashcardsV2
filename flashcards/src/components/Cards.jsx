@@ -54,6 +54,14 @@ function Cards() {
         setIsFlipped(false);
     };
 
+    const handlePrevious = () => {
+        setCurrentIndex(
+            (prevIndex) =>
+                (prevIndex - 1 + flashcards.length) % flashcards.length
+        );
+        setIsFlipped(false);
+    };
+
     const handleFlip = () => {
         setIsFlipped(!isFlipped);
     };
@@ -69,6 +77,8 @@ function Cards() {
             </div>
 
             <div className='button-container'>
+                <button onClick={handlePrevious}>Previous</button>
+
                 <button onClick={handleNext}>Next</button>
             </div>
         </div>
